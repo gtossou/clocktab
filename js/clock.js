@@ -1,11 +1,14 @@
+// day number to string
 const dayToString = function (weekDay){
     return days[weekDay-1]
 }
 
+// month number to string
 const monthToString = function (currentMonth){
     return months[currentMonth]
 }
 
+// add trailing zero for time
 const checkTrailingzero = function(number){
     if (parseInt(number).toString().length==2){
         return parseInt(number);
@@ -15,35 +18,65 @@ const checkTrailingzero = function(number){
     }
 }
 
+// tick second
 const tickSecond=function(){
     let today=new Date();
-    document.querySelector(".seconds").innerHTML=checkTrailingzero(today.getSeconds());
-
+    // check user format 
+    if (toggleValue=="locale"){
+        document.querySelector(".seconds").innerHTML=checkTrailingzero(today.getSeconds());
+    }
+    else{
+        pmAm=today.toLocaleString('en-US').split(" ",)[2]
+        document.querySelector(".seconds").innerHTML=checkTrailingzero(today.getSeconds())+" "+pmAm;
+    }
 }
 
+// tick minute
 const tickMinute=function(){
     let today=new Date();
     document.querySelector(".minutes").innerHTML=checkTrailingzero(today.getMinutes());
 }
 
-const tickHour=function(){
+// tick hour
+const tickHour=function(toggleValue){
     let today=new Date();
+    // check user format
+    if (toggleValue=="locale"){
     document.querySelector(".hours").innerHTML=checkTrailingzero(today.getHours());
+    }
+    else{
+        today=today.toLocaleString('en-US')
+        hourUS=(today.split(':')[0].split(",",)[1])
+        document.querySelector(".hours").innerHTML=checkTrailingzero(hourUS);
+    }
 }
 
+// tick day
 const tickDay=function(){
     let today=new Date();
     document.querySelector(".day").innerHTML=dayToString(today.getDay());
 }
 
+// tick month
 const tickMonth=function(){
     let today=new Date();
     document.querySelector(".month").innerHTML=dayToString(today.getMonth());
 }
 
+const toggleFunction = function(toggleValue){
+    if (toggleValue=="locale"){
+        toggleValue="US"
+    }
+    else{
+        toggleValue="locale"
+    }
+    return toggleValue;
+}
 const months=["January","February","March","April","May","June","July","August","September","October","November","December"]
 const days=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
 
+// vars
+let toggleValue="locale";
 const today=new Date();
 
 // BODY DIV
@@ -74,5 +107,11 @@ bodyDiv.insertAdjacentElement("beforeend",dateDiv)
 setInterval(function(){
     tickSecond();
     tickMinute();
-    tickHour();
+    tickHour(toggleValue);
 }, 1000); 
+butto=document.querySelector(".togButton");
+console.log(butto);
+butto.addEventListener('click', function(){
+    toggleValue=toggleFunction(toggleValue)
+});
+
