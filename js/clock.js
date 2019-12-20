@@ -46,10 +46,15 @@ const days=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunda
 
 const today=new Date();
 
-// CREATE TIME DIV
+// BODY DIV
+const bodyDiv=document.createElement("div");
+bodyDiv.classList.add("bodyDiv");
+document.body.appendChild(bodyDiv);
+
+// TIME DIV
 const timeDiv=document.createElement("div");
 timeDiv.classList.add("timeDiv");
-document.body.appendChild(timeDiv);
+
 let timeHtml = `<p class="timeP">
                 <span class="hours">${today.getHours()}</span>
                 <span>:</span>
@@ -57,15 +62,16 @@ let timeHtml = `<p class="timeP">
                 <span class="seconds">${today.getSeconds()}</span>
                 </p>`;
 timeDiv.innerHTML=timeHtml;
-
-// CREATE DATE DIV
+bodyDiv.insertAdjacentElement("beforeend",timeDiv)
+// DATE DIV
 const dateDiv=document.createElement("div");
 dateDiv.classList.add("dateDiv");
-document.body.appendChild(timeDiv);
 let dateHtml = `<p class="dateP"><span class="day">${dayToString(today.getDay())}</span> - <span class="month">${monthToString(today.getMonth())}</span> <span class="date">${today.getDate()}</span></p>`;
 dateDiv.innerHTML=dateHtml;
+bodyDiv.insertAdjacentElement("beforeend",dateDiv)
+
 dateParagraph=document.querySelector(".dateP")
-timeDiv.insertAdjacentElement("beforeend",dateDiv);
+//timeDiv.chi ("beforeend",dateDiv);
 
 setInterval(function(){
     tickSecond();
