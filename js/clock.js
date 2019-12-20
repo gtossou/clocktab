@@ -23,12 +23,12 @@ const tickSecond=function(){
 
 const tickMinute=function(){
     let today=new Date();
-    document.querySelector(".minutes").innerHTML=today.getMinutes();
+    document.querySelector(".minutes").innerHTML=checkTrailingzero(today.getMinutes());
 }
 
 const tickHour=function(){
     let today=new Date();
-    document.querySelector(".hours").innerHTML=today.getHours();
+    document.querySelector(".hours").innerHTML=checkTrailingzero(today.getHours());
 }
 
 const tickDay=function(){
@@ -56,22 +56,20 @@ const timeDiv=document.createElement("div");
 timeDiv.classList.add("timeDiv");
 
 let timeHtml = `<p class="timeP">
-                <span class="hours">${today.getHours()}</span>
+                <span class="hours">${checkTrailingzero(today.getHours())}</span>
                 <span>:</span>
-                <span class="minutes">${today.getMinutes()}</span>
-                <span class="seconds">${today.getSeconds()}</span>
+                <span class="minutes">${checkTrailingzero(today.getMinutes())}</span>
+                <span class="seconds">${checkTrailingzero(today.getSeconds())}</span>
                 </p>`;
 timeDiv.innerHTML=timeHtml;
 bodyDiv.insertAdjacentElement("beforeend",timeDiv)
+
 // DATE DIV
 const dateDiv=document.createElement("div");
 dateDiv.classList.add("dateDiv");
 let dateHtml = `<p class="dateP"><span class="day">${dayToString(today.getDay())}</span> - <span class="month">${monthToString(today.getMonth())}</span> <span class="date">${today.getDate()}</span></p>`;
 dateDiv.innerHTML=dateHtml;
 bodyDiv.insertAdjacentElement("beforeend",dateDiv)
-
-dateParagraph=document.querySelector(".dateP")
-//timeDiv.chi ("beforeend",dateDiv);
 
 setInterval(function(){
     tickSecond();
