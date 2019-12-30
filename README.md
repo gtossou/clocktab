@@ -7,4 +7,4 @@
 ### Summary
 
 My first app done in my roadmap to become a fullstack web developper.
-Done in few hours, it made me apply the basics of callback functions and DOM manipulation.
+Done in few hours, it made me apply the basics of callback functions, DOM manipulation and debugging.

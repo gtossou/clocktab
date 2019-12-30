@@ -24,46 +24,51 @@ const checkTrailingzero = function(number){
 // tick second
 const tickSecond = function(){
     let today = new Date();
+    let secondSpan = document.querySelector("#seconds");
     // check user format 
     if (toggleValue == "locale"){
-        document.querySelector("#seconds").innerHTML = checkTrailingzero(today.getSeconds());
+        secondSpan.innerHTML = checkTrailingzero(today.getSeconds());
     }
     else{
         pmAm = today.toLocaleString('en-US').split(" ",)[2]
-        document.querySelector("#seconds").innerHTML = checkTrailingzero(today.getSeconds())+" "+pmAm;
+        secondSpan.innerHTML = checkTrailingzero(today.getSeconds())+" "+pmAm;
     }
 }
 
 // tick minute
 const tickMinute = function(){
     let today = new Date();
-    document.querySelector("#minutes").innerHTML = checkTrailingzero(today.getMinutes());
+    let minSpan = document.querySelector("#minutes");
+    minSpan.innerHTML = checkTrailingzero(today.getMinutes());
 }
 
 // tick hour
 const tickHour = function(toggleValue){
     let today = new Date();
+    let hourSpan = document.querySelector("#hours");
     // check user format
     if (toggleValue == "locale"){
-    document.querySelector("#hours").innerHTML = checkTrailingzero(today.getHours());
+        hourSpan.innerHTML = checkTrailingzero(today.getHours());
     }
     else{
         today = today.toLocaleString('en-US')
         hourUS = (today.split(':')[0].split(",",)[1])
-        document.querySelector("#hours").innerHTML = checkTrailingzero(hourUS);
+        hourSpan.innerHTML = checkTrailingzero(hourUS);
     }
 }
 
 // tick day
 const tickDay = function(){
     let today = new Date();
-    document.querySelector("#day").innerHTML = dayToString(today.getDay());
+    let daySpan = document.querySelector("#day");
+    daySpan.innerHTML = dayToString(today.getDay());
 }
 
 // tick month
 const tickMonth = function(){
     let today = new Date();
-    document.querySelector("#month").innerHTML = dayToString(today.getMonth());
+    let monthSpan = document.querySelector("#month");
+    monthSpan.innerHTML = dayToString(today.getMonth());
 }
 
 const toggleFunction = function(toggleValue){
@@ -86,25 +91,85 @@ bodyDiv.classList.add("bodyDiv");
 document.body.appendChild(bodyDiv);
 
 // TIME DIV
-const timeDiv = document.createElement("div");
-timeDiv.classList.add("timeDiv");
 
-let timeHtml = `<p class="timeP">
-                <span id="hours "class="hours">${checkTrailingzero(today.getHours())}</span>
-                <span>:</span>
-                <span id="minutes" class="minutes">${checkTrailingzero(today.getMinutes())}</span>
-                <span id="seconds" class="seconds">${checkTrailingzero(today.getSeconds())}</span>
-                </p>`;
-timeDiv.innerHTML = timeHtml;
-bodyDiv.insertAdjacentElement("beforeend",timeDiv)
+const createTimeDiv = function(){
+    const timeDiv = document.createElement("div");
+    timeDiv.classList.add("timeDiv");
+
+    let timeParagraph = document.createElement("p");
+    timeParagraph.classList.add("timeP");
+    timeDiv.appendChild(timeParagraph);
+    
+    // hours span
+    let hoursSpan = document.createElement("span");
+    hoursSpan.id = "hours";
+    hoursSpan.textContent = checkTrailingzero(today.getHours());
+    timeParagraph.appendChild(hoursSpan);
+    
+    let colOneSpan = document.createElement("span");
+    colOneSpan.textContent = ":";
+    timeParagraph.appendChild(colOneSpan);
+    
+    // minutes span
+    let minutesSpan = document.createElement("span");
+    minutesSpan.id = "minutes";
+    minutesSpan.textContent = checkTrailingzero(today.getMinutes());
+    timeParagraph.appendChild(minutesSpan);
+    
+    let colTwoSpan = document.createElement("span");
+    colTwoSpan.textContent = ":";
+    timeParagraph.appendChild(colTwoSpan);
+    
+    // seconds span
+    let secondsSpan = document.createElement("span");
+    secondsSpan.id = "seconds";
+    secondsSpan.textContent = checkTrailingzero(today.getSeconds());
+    timeParagraph.appendChild(secondsSpan);
+
+    bodyDiv.insertAdjacentElement("beforeend",timeDiv)
+
+
+}
+
+createTimeDiv();
 
 // DATE DIV
-const dateDiv = document.createElement("div");
-dateDiv.classList.add("dateDiv");
-let dateHtml = `<p class="dateP"><span id="day" class="day">${dayToString(today.getDay())}</span> - <span id="month" class="month">${monthToString(today.getMonth())}</span> <span class="date">${today.getDate()}</span></p>`;
-dateDiv.innerHTML=dateHtml;
+const createDateDiv = function(){
+    let dateDiv = document.createElement("div");
+    dateDiv.classList.add("dateDiv");
 
-bodyDiv.insertAdjacentElement("beforeend",dateDiv)
+    let dateParagraph = document.createElement("p");
+    dateParagraph.id = "dateP";
+    dateDiv.appendChild(dateParagraph);
+
+    // day span
+    let daySpan = document.createElement("span");
+    daySpan.id = "day";
+    daySpan.textContent = dayToString(today.getDay());
+    dateParagraph.appendChild(daySpan);
+    
+    let dashOneSpan = document.createElement("span");
+    dashOneSpan.textContent = "-";
+    dateParagraph.appendChild(dashOneSpan);
+
+    // month span
+    let monthSpan = document.createElement("span");
+    monthSpan.id = "month";
+    monthSpan.textContent = monthToString(today.getMonth());
+    dateParagraph.appendChild(monthSpan);
+
+    // date/year span
+    let yearSpan = document.createElement("span");
+    yearSpan.id = "year";
+    yearSpan.textContent = today.getDate();
+    dateParagraph.appendChild(yearSpan);
+
+    bodyDiv.insertAdjacentElement("beforeend",dateDiv);
+
+}
+
+createDateDiv();
+
 
 setInterval(function(){
     tickSecond();
